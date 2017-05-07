@@ -40,8 +40,6 @@ namespace ValidationAjax.Controllers
         }
 
 
-
-        [HttpGet]
         public JsonResult GetPessoas()
         {
             var pessoas = db.Pessoas.ToList();
