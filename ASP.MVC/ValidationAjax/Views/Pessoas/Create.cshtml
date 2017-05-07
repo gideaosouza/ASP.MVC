@@ -1,0 +1,43 @@
+﻿@model ValidationAjax.Models.Pessoa
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+  
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+     var app = angular.module('myapp', []);
+     app.controller('pessoa', function ($scope, $http) {
+         $scope.PessoaAdd = function () {
+             var pessoa = {
+                 Nome: $('#Nome').val(),
+                 CPF: $('#CPF').val()
+             };
+             $http({
+                 method: 'POST',
+                 url: '/Pessoas/PessoaADD',
+                 headers: {
+                     "Content-Type": "application/json"
+                 },
+                 data: { pessoa: pessoa },
+
+             }).then(function onSuccess(response) {
+                 if (response.data.Sucess ==  false ) {
+                     alert("Nada foi salvo!");
+                 } else if (response.data.Sucess == true) {
+                     alert("Sucesso!");
+             }
+             });
+         }
+     });
+</script>
+}

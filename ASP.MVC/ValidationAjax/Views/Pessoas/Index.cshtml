@@ -1,0 +1,101 @@
+﻿@model ValidationAjax.Models.ViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+@Scripts.Render("~/bundles/angular")
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div ng-app="myapp" ng-controller="pessoa">
+
+    <table class="table">
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                CPF
+            </th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="x in pessoas">
+            <td>{{ x.Nome }}</td>
+            <td>{{ x.CPF }}</td>
+            <td>
+                <button class="btn btn-default btn-xs pull-right"
+                        ng-click="PessoasDelete(x.PessoaID)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+
+
+    <form class="form-horizontal">
+        <h4>Pessoa</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pessoa.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pessoa.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pessoa.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pessoa.CPF, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pessoa.CPF, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pessoa.CPF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" ng-click="PessoaAdd()">Adicionar</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+     var app = angular.module('myapp', []);
+     app.controller('pessoa', function ($scope, $http) {
+         $http.get("/Pessoas/GetPessoas").then(function (response) {
+             $scope.pessoas = response.data;
+         });
+         $scope.PessoaAdd = function () {
+             var pessoa = {
+                 Nome: $('#Pessoa_Nome').val(),
+                 CPF: $('#Pessoa_CPF').val()
+             };
+             $http({
+                 method: 'POST',
+                 url: '/Pessoas/PessoaADD',
+                 headers: {
+                     "Content-Type": "application/json"
+                 },
+                 data: { pessoa: pessoa },
+
+             }).then(function onSuccess(response) {
+                 if (response.data.Sucess ==  false ) {
+                     alert("Nada foi salvo!");
+                 } else if (response.data.Sucess == true) {
+                     $http.get("/Pessoas/GetPessoas").then(function (response) {
+                         $scope.pessoas = response.data;
+                     });
+                     alert("Sucesso!");
+             }
+             });
+         }
+     });
+    </script>
+}
