@@ -1,8 +1,9 @@
-## Welcome to GitHub Pages
+## Bem vindo a pagina do Projeto de ASP.Net MVC
 
-You can use the [editor on GitHub](https://github.com/gideaosouza/ASP.MVC/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Eu sou o Gideão e aqui estarei fazendo alguns projetos de ASP.MVC.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+O primeiro projeto é o de Validação por Ajax.
+Fontes: http://stackoverflow.com/questions/14005773/use-asp-net-mvc-validation-with-jquery-ajax
 
 ### Markdown
 
