@@ -9,7 +9,7 @@ namespace ValidationAjax.Models
 {
     public class ContextoDB : DbContext
     {
-        public ContextoDB() : base("DefaultConnection")
+        public ContextoDB() : base("ConnectionStringName")
         {            
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ContextoDB>());
             Configuration.LazyLoadingEnabled = true;
