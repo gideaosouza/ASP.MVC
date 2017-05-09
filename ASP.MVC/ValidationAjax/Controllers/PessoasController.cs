@@ -130,6 +130,21 @@ namespace ValidationAjax.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public JsonResult PessoaDel(int id)
+        {
+            try
+            {
+                Pessoa pessoa = db.Pessoas.Find(id);
+                db.Pessoas.Remove(pessoa);
+                db.SaveChanges();
+                return Json(new { Sucess  = true});
+            }
+            catch (Exception)
+            {
+                return Json(new { Sucess = false });
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
